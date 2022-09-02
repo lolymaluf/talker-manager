@@ -11,7 +11,7 @@ const {
   watchedAtValidation,
   rateValidation,
 } = require('./middlewares/validateNewTalker');
-const tokenValidation = require('./middlewares/tokenValidation');
+const { tokenValidation } = require('./middlewares/tokenValidation');
 
 const app = express();
 app.use(bodyParser.json());

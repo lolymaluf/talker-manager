@@ -5,8 +5,8 @@ const fileNameJson = '../talker.json';
 
 const readTalkers = async () => {
   try {
-    const res = await fs.readFile(join(__dirname, fileNameJson), 'utf-8');
-    return JSON.parse(res);
+    const allTalkers = await fs.readFile(join(__dirname, fileNameJson), 'utf-8');
+    return JSON.parse(allTalkers);
   } catch (error) {
     return [];
   }

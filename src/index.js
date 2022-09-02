@@ -5,7 +5,6 @@ const { getAllTalkers } = require('./utils/talkers');
 const { emailValidation } = require('./middlewares/emailValidation');
 const { passwordValidation } = require('./middlewares/passwordValidation');
 
-
 const app = express();
 app.use(bodyParser.json());
 

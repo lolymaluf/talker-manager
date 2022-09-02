@@ -17,6 +17,16 @@ const getAllTalkers = async () => {
   return allTalkers;
 };
 
+const createNewTalker = async (req, res) => {
+  const requestTalker = req.body;
+  const getTalkers = await readTalkers();
+  const addTalker = { id: requestTalker.length + 1, ...requestTalker };
+  getTalkers.push(addTalker);
+  fs.writeFile(fileNameJson, JSON.stringify(getTalkers));
+  return res.status(201).json(addTalker);
+};
+
 module.exports = {
   getAllTalkers,
+  createNewTalker,
 };

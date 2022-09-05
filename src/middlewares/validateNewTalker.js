@@ -1,11 +1,11 @@
 const nameValidation = (req, res, next) => {
   const { name } = req.body;
   const minimumName = 3;
+  if (!name || name === ' ') {
+    return res.status(400).json({ message: 'O campo "name" é obrigatório' });
+  }
   if (name.length < minimumName) {
     return res.status(400).json({ message: 'O "name" deve ter pelo menos 3 caracteres' });
-  }
-  if (!name) {
-    return res.status(400).json({ message: 'O campo "name" é obrigatório' });
   }
   next();
 };

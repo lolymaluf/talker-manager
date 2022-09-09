@@ -28,7 +28,18 @@ const createNewTalker = async (talker) => {
   return addTalker;
 };
 
+const editTalker = async (talkerID, talker) => {
+  const waitForTalkers = await readTalkers();
+  const chooseTalker = waitForTalkers.find((tk) => tk.id === Number(talkerID));
+  chooseTalker.name = talker.name;
+  chooseTalker.age = talker.age;
+  chooseTalker.talk = talker.talk;
+  await fs.writeFile(fileNameJson, JSON.stringify(waitForTalkers));
+return chooseTalker;
+};
+
 module.exports = {
   getAllTalkers,
   createNewTalker,
+  editTalker,
 };

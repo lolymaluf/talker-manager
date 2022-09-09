@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-const { getAllTalkers, createNewTalker } = require('./utils/talkers');
+// const talkers = require('./utils/talkers');
+// const fs = require('fs');
+// const { join } = require('path');
+const { getAllTalkers, createNewTalker, editTalker } = require('./utils/talkers');
 const { emailValidation } = require('./middlewares/emailValidation');
 const { passwordValidation } = require('./middlewares/passwordValidation');
 const {
@@ -62,3 +65,20 @@ app.post('/login', emailValidation, passwordValidation, (_req, res) => {
   const useCrypto = crypto.randomBytes(8).toString('hex');
   return res.status(HTTP_OK_STATUS).json({ token: useCrypto });
 });
+
+  app.put(
+    '/talker/:id',
+    tokenValidation,
+    nameValidation,
+    ageValidation,
+    talkValidation,
+    watchedAtValidation,
+    rateValidation,
+    
+    async (req, res) => {
+      const { id } = req.params;
+      const object = { id, ...req.body };
+      const result = await editTalker(id, object);
+      return res.status(200).json(result);
+    },
+    );

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-// const talkers = require('./utils/talkers');
+const talkers = require('./utils/talkers');
 // const fs = require('fs');
 // const { join } = require('path');
 const { getAllTalkers, createNewTalker, editTalker } = require('./utils/talkers');
@@ -82,3 +82,14 @@ app.post('/login', emailValidation, passwordValidation, (_req, res) => {
       return res.status(200).json(result);
     },
     );
+
+    app.delete(
+      '/talker/:id',
+      tokenValidation,
+      
+      async (req, res) => {
+        const { id } = req.params;
+        await talkers.deleteTalker(id);
+        return res.status(204).end();
+      },
+      );

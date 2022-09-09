@@ -38,8 +38,15 @@ const editTalker = async (talkerID, talker) => {
 return chooseTalker;
 };
 
+const deleteTalker = async (id) => {
+  const waitForTalkers = await readTalkers();
+  const choseTalkerToDelete = waitForTalkers.filter((tk) => tk.id !== Number(id));
+  await fs.writeFile(fileNameJson, JSON.stringify(choseTalkerToDelete));
+};
+
 module.exports = {
   getAllTalkers,
   createNewTalker,
   editTalker,
+  deleteTalker,
 };

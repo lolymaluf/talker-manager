@@ -36,6 +36,18 @@ app.get('/talker', async (_req, res) => {
   res.status(HTTP_OK_STATUS).json(respList);
 });
 
+app.get(
+  '/talker/search',
+  tokenValidation,
+  async (req, res) => {
+    const { q } = req.query;
+    console.log('query', q);
+    const findTalker = await talkers.searchTalker(q);
+    console.log(findTalker);
+    return res.status(200).json(findTalker);
+  },
+);
+
 app.get('/talker/:id', async (req, res) => {
   const respList = await getAllTalkers();
   const talkerById = respList.find((talker) => talker.id === Number(req.params.id));
@@ -66,30 +78,30 @@ app.post('/login', emailValidation, passwordValidation, (_req, res) => {
   return res.status(HTTP_OK_STATUS).json({ token: useCrypto });
 });
 
-  app.put(
-    '/talker/:id',
-    tokenValidation,
-    nameValidation,
-    ageValidation,
-    talkValidation,
-    watchedAtValidation,
-    rateValidation,
+app.put(
+  '/talker/:id',
+  tokenValidation,
+  nameValidation,
+  ageValidation,
+  talkValidation,
+  watchedAtValidation,
+  rateValidation,
     
-    async (req, res) => {
-      const { id } = req.params;
-      const object = { id, ...req.body };
-      const result = await editTalker(id, object);
-      return res.status(200).json(result);
-    },
-    );
+  async (req, res) => {
+    const { id } = req.params;
+    const object = { id, ...req.body };
+    const result = await editTalker(id, object);
+    return res.status(200).json(result);
+  },
+  );
 
-    app.delete(
-      '/talker/:id',
-      tokenValidation,
-      
-      async (req, res) => {
-        const { id } = req.params;
-        await talkers.deleteTalker(id);
-        return res.status(204).end();
-      },
-      );
+app.delete(
+ '/talker/:id',
+  tokenValidation,
+  
+  async (req, res) => {
+  const { id } = req.params;
+  await talkers.deleteTalker(id);
+  return res.status(204).end();
+},
+);

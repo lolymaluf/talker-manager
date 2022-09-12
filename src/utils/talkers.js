@@ -44,9 +44,34 @@ const deleteTalker = async (id) => {
   await fs.writeFile(fileNameJson, JSON.stringify(choseTalkerToDelete));
 };
 
+/* const searchTalker = async (req, res) => {
+  const { q } = req.query;
+  const waitTalker = await getAllTalkers();
+  const searchTk = waitTalker.filter((tk) => tk.name.includes(q));
+  
+  if (!q || q === ' ') {
+    return res.status(200).json(waitTalker);
+  }
+  if (!searchTk) {
+    return res.status(200).json([]);
+  }
+  return res.status(200).json(searchTk);
+}; */
+
+const searchTalker = async (search) => {
+  try {
+    const waitTalkers = await readTalkers();
+    const searchFilter = waitTalkers.filter((talker) => talker.name.includes(search));
+    return searchFilter;
+  } catch (error) {
+    return null;
+  }
+};
+
 module.exports = {
   getAllTalkers,
   createNewTalker,
   editTalker,
   deleteTalker,
+  searchTalker,
 };
